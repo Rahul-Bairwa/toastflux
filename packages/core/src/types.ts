@@ -19,6 +19,7 @@ export type ToastPosition =
 export interface Toast {
   id: string;
   message?: string;
+  description?: ReactNode;
   type?: ToastType;
   createdAt: number;
   style?: CSSProperties;

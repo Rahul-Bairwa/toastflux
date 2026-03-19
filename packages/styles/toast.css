@@ -1,125 +1,174 @@
 .tf-toast-container {
-    position: fixed;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
 }
 
 .tf-toast-container > * {
-    pointer-events: auto;
+  pointer-events: auto;
 }
 
-.tf-top-left { top: 20px; left: 20px; align-items: flex-start; }
-.tf-top-center { top: 20px; left: 50%; transform: translateX(-50%); align-items: center; }
-.tf-top-right { top: 20px; right: 20px; align-items: flex-end; }
-.tf-bottom-left { bottom: 20px; left: 20px; flex-direction: column-reverse; align-items: flex-start; }
-.tf-bottom-center { bottom: 20px; left: 50%; transform: translateX(-50%); flex-direction: column-reverse; align-items: center; }
-.tf-bottom-right { bottom: 20px; right: 20px; flex-direction: column-reverse; align-items: flex-end; }
+.tf-top-left {
+  top: 20px;
+  left: 20px;
+  align-items: flex-start;
+}
+.tf-top-center {
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+.tf-top-right {
+  top: 20px;
+  right: 20px;
+  align-items: flex-end;
+}
+.tf-bottom-left {
+  bottom: 20px;
+  left: 20px;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+.tf-bottom-center {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+  align-items: center;
+}
+.tf-bottom-right {
+  bottom: 20px;
+  right: 20px;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}
 
 .tf-toast {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: #0f0f0f;
-    border: 1px solid #2a2a2a;
-    border-radius: 8px;
-    color: #f1f1f1;
-    font-size: 14px;
-    font-family: var(--tf-font-family, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    animation: tf-fadeIn 0.2s ease-out;
-    min-width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #f1f1f1;
+  font-size: 14px;
+  font-family: var(
+    --tf-font-family,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif
+  );
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  animation: tf-fadeIn 0.2s ease-out;
+  min-width: 320px;
 }
 
 .tf-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f1f1f1;
 }
 
 .tf-message {
-    flex: 1;
+  text-align: left;
+  flex: 1;
+}
+
+.tf-description {
+  font-size: 13px;
+  color: rgba(241, 241, 241, 0.7);
+  margin-top: -5px;
 }
 
 /* Progress Bar */
 .tf-progress-bg {
-    margin-top: 10px;
-    height: 4px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-    overflow: hidden;
+  margin-top: 10px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
 }
 .tf-progress-fill {
-    height: 100%;
-    background: #ffffff;
-    transition: width 0.2s;
+  height: 100%;
+  background: #ffffff;
+  transition: width 0.2s;
 }
 
 /* Action Button */
 .tf-action-btn {
-    background: rgba(255,255,255,0.1);
-    border: none;
-    color: #ffffff;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 /* Close Button */
 .tf-close-btn {
-    background: transparent;
-    border: none;
-    color: #888888;
-    cursor: pointer;
-    padding: 4px 4px 4px 8px;
-    font-size: 14px;
-    align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: #888888;
+  cursor: pointer;
+  padding: 4px 4px 4px 8px;
+  font-size: 14px;
+  align-self: flex-start;
 }
 .tf-close-btn:hover {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 /* ---- LIGHT THEME ---- */
 .tf-theme-light .tf-toast {
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    color: #171717;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  color: #171717;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .tf-theme-light .tf-icon {
-    color: #171717;
+  color: #171717;
 }
 .tf-theme-light .tf-progress-bg {
-    background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 .tf-theme-light .tf-progress-fill {
-    background: #171717;
+  background: #171717;
 }
 .tf-theme-light .tf-action-btn {
-    background: rgba(0,0,0,0.06);
-    color: #171717;
+  background: rgba(0, 0, 0, 0.06);
+  color: #171717;
 }
 .tf-theme-light .tf-close-btn:hover {
-    color: #000000;
+  color: #000000;
+}
+.tf-theme-light .tf-description {
+  color: rgba(23, 23, 23, 0.7);
 }
 
 @keyframes tf-fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

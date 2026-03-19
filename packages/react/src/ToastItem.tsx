@@ -67,6 +67,7 @@ export function ToastItem({ toast }: { toast: Toast }) {
   }, [isHovered, isDragging, duration, toast.id]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest('button')) return;
     dragStartX.current = e.clientX;
     setIsDragging(true);
     e.currentTarget.setPointerCapture(e.pointerId);
@@ -76,7 +77,6 @@ export function ToastItem({ toast }: { toast: Toast }) {
     if (!isDragging || dragStartX.current === null) return;
     const deltaX = e.clientX - dragStartX.current;
     
-    // Constrain swipe depending on position array
     const pos = toast.position || "top-right";
     if (pos.includes("right") && deltaX < 0) return;
     if (pos.includes("left") && deltaX > 0) return;
@@ -137,6 +137,7 @@ export function ToastItem({ toast }: { toast: Toast }) {
       {Icon && <span className="tf-icon" style={{ alignSelf: 'flex-start', marginTop: '2px', color: toast.iconColor }}>{Icon}</span>}
       <div className="tf-message" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <span>{toast.message}</span>
+        {toast.description && <span className="tf-description">{toast.description}</span>}
         {toast.progress !== undefined && (
           <div className="tf-progress-bg">
             <div className="tf-progress-fill" style={{ width: `${toast.progress}%` }} />
