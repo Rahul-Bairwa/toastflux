@@ -11,20 +11,22 @@ ToastFlux is built for developers who want **speed, flexibility, and clean UI** 
 
 - ⚡ Blazing fast & lightweight
 - 🎨 Beautiful default UI (no extra styling needed)
-- 🧩 Fully customizable (style, icon, layout)
+- 🧩 Fully customizable (style, icon, font, layout)
 - 📍 Flexible positioning system
 - 🎯 Action buttons (Undo, Retry, etc.)
 - ⏱ Smart duration & dismiss control
 - 📊 Progress bar support
+- 📝 Description text support
 - 🌗 Built-in dark & light themes
-- ⚛️ Works with React & Next.js
+- ⚛️ Works with React & Next.js App Router
+- 👆 Swipe to dismiss (touch & pointer support)
 
 ---
 
 ## 📦 Installation
 
 ```bash
-npm install @toastflux/react @toastflux/styles
+npm install toastflux
 ```
 
 ---
@@ -32,8 +34,8 @@ npm install @toastflux/react @toastflux/styles
 ## 🚀 Quick Start
 
 ```jsx
-import { Toaster, toast } from "@toastflux/react";
-import "@toastflux/styles/toast.css";
+import { Toaster, toast } from "toastflux";
+import "toastflux/styles/toast.css";
 
 function App() {
   return (
@@ -65,6 +67,18 @@ toast.default("Just a message.");
 ---
 
 ## 🎨 Customization
+
+### 📝 Description
+
+Add a subtitle/description below the main message:
+
+```jsx
+toast.success("Event has been created", {
+  description: "Monday, January 3rd at 6:00pm",
+});
+```
+
+---
 
 ### ⏱ Duration & Dismiss
 
@@ -98,7 +112,7 @@ toast.success("Bottom right toast!", {
 });
 ```
 
-Or globally:
+Or globally via `<Toaster />`:
 
 ```jsx
 <Toaster position="top-right" />
@@ -126,6 +140,7 @@ toast.default("Custom styled toast", {
     color: "#000",
   },
   icon: <span>🌟</span>,
+  iconColor: "#10b981",
 });
 ```
 
@@ -133,7 +148,7 @@ toast.default("Custom styled toast", {
 
 ## 🎭 Themes
 
-ToastFlux supports built-in themes:
+ToastFlux supports built-in dark and light themes:
 
 ```jsx
 <Toaster theme="light" />
@@ -146,51 +161,91 @@ ToastFlux supports built-in themes:
 
 ### `toast(message, options?)`
 
-| Option      | Type               | Description            |
-| ----------- | ------------------ | ---------------------- |
-| duration    | number             | Auto dismiss time (ms) |
-| dismissible | boolean            | Enable manual close    |
-| position    | ToastPosition      | Toast position         |
-| style       | CSSProperties      | Inline styles          |
-| className   | string             | Custom class           |
-| icon        | ReactNode          | Custom icon            |
-| action      | { label, onClick } | Action button          |
-| progress    | number             | Progress bar (0–100)   |
+| Option        | Type               | Description                   |
+| ------------- | ------------------ | ----------------------------- |
+| `description` | ReactNode          | Subtitle below main message   |
+| `duration`    | number             | Auto dismiss time in ms       |
+| `dismissible` | boolean            | Enable manual ✖ close button  |
+| `position`    | ToastPosition      | Where toast appears on screen |
+| `style`       | CSSProperties      | Inline styles override        |
+| `className`   | string             | Custom CSS class              |
+| `icon`        | ReactNode          | Custom icon element           |
+| `iconColor`   | string             | Color for default icons       |
+| `action`      | { label, onClick } | Action button config          |
+| `progress`    | number             | Progress bar value (0–100)    |
 
 ---
 
 ## 📍 Supported Positions
 
-- top-left
-- top-center
-- top-right
-- bottom-left
-- bottom-center
-- bottom-right
+| Position        | Description                |
+| --------------- | -------------------------- |
+| `top-left`      | Top left corner            |
+| `top-center`    | Top center                 |
+| `top-right`     | Top right corner (default) |
+| `bottom-left`   | Bottom left corner         |
+| `bottom-center` | Bottom center              |
+| `bottom-right`  | Bottom right corner        |
 
 ---
 
 ## 🔤 Custom Font (CSS Variable)
 
-You can match your app’s font using CSS variables:
+ToastFlux uses a clean system font by default. To match your app's custom font, set the `--tf-font-family` CSS variable:
 
 ```css
+/* In your global CSS (e.g. index.css or globals.css) */
 :root {
   --tf-font-family: "Inter", sans-serif;
 }
 ```
 
-👉 Falls back to system `sans-serif` by default.
+👉 Falls back to `system-ui, sans-serif` by default — no ugly serif fonts!
 
 ---
 
-## ⚙️ Next.js Usage
+## ⚙️ Next.js (App Router) Usage
 
-```jsx
+ToastFlux works seamlessly with Next.js App Router. Since it uses client-side state, add `"use client"` where needed.
+
+### 1. Add `<Toaster />` to Root Layout
+
+```tsx
+// app/layout.tsx
+import { Toaster } from "toastflux";
+import "toastflux/styles/toast.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Toaster theme="dark" />
+      </body>
+    </html>
+  );
+}
+```
+
+### 2. Use `toast` in Any Client Component
+
+```tsx
+// app/page.tsx
 "use client";
 
-import { Toaster, toast } from "@toastflux/react";
-import "@toastflux/styles/toast.css";
+import { toast } from "toastflux";
+
+export default function HomePage() {
+  return (
+    <button onClick={() => toast.success("It works in Next.js too! 🚀")}>
+      Show Toast
+    </button>
+  );
+}
 ```
 
 ---
@@ -198,21 +253,32 @@ import "@toastflux/styles/toast.css";
 ## 🧱 Architecture
 
 ```
-packages/
-  core/     → logic layer (framework independent)
-  react/    → UI layer
-  styles/   → CSS
+toastflux/
+├── packages/
+│   ├── core/      → Framework-independent logic (store, types, toast fn)
+│   ├── react/     → React UI components (Toaster, ToastItem)
+│   └── styles/    → CSS (toast.css)
+└── apps/
+    ├── react-app/ → Vite + React demo
+    └── next-app/  → Next.js App Router demo
 ```
 
 ---
 
 ## 🚀 Roadmap
 
-- [ ] Promise-based toasts
+- [x] Toast types (success, error, info, warning, default)
+- [x] Dark & Light themes
+- [x] Description support
+- [x] Custom font via CSS variable
+- [x] Action buttons
+- [x] Progress bar
+- [x] Swipe to dismiss
+- [x] Next.js App Router support
+- [ ] Promise-based toasts (`toast.promise`)
 - [ ] Smart toast grouping
 - [ ] Advanced animations
 - [ ] DevTools panel
-- [ ] AI-powered toasts (future 🔥)
 
 ---
 

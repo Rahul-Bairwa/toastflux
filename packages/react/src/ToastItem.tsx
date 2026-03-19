@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useState, useEffect } from "react";
 import { Toast, toast as toastLib } from "@toastflux/core";
 

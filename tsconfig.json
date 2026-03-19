@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "target": "ES2018",
+        "jsx": "react-jsx",
         "lib": [
             "DOM",
             "ESNext"
@@ -15,10 +16,10 @@
         "declarationMap": true,
         "baseUrl": ".",
         "paths": {
-            "@your-lib/core": [
+            "@toastflux/core": [
                 "packages/core/src"
             ],
-            "@your-lib/react": [
+            "@toastflux/react": [
                 "packages/react/src"
             ]
         }
