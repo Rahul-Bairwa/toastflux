@@ -248,23 +248,6 @@ export default function HomePage() {
 }
 ```
 
----
-
-## 🧱 Architecture
-
-```
-toastflux/
-├── packages/
-│   ├── core/      → Framework-independent logic (store, types, toast fn)
-│   ├── react/     → React UI components (Toaster, ToastItem)
-│   └── styles/    → CSS (toast.css)
-└── apps/
-    ├── react-app/ → Vite + React demo
-    └── next-app/  → Next.js App Router demo
-```
-
----
-
 ## 🚀 Roadmap
 
 - [x] Toast types (success, error, info, warning, default)
@@ -297,4 +280,4 @@ MIT
 
 ## ❤️ Author
 
-Built with passion by **Rahul**
+Built with passion by **Rahul Bairwa**

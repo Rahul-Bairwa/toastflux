@@ -1,52 +1,73 @@
 .tf-toast-container {
   position: fixed;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  pointer-events: none;
-}
-
-.tf-toast-container > * {
+  z-index: 99999;
   pointer-events: auto;
 }
 
+/* ---- Position placements ---- */
 .tf-top-left {
   top: 20px;
   left: 20px;
-  align-items: flex-start;
 }
 .tf-top-center {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  align-items: center;
 }
 .tf-top-right {
   top: 20px;
   right: 20px;
-  align-items: flex-end;
 }
 .tf-bottom-left {
   bottom: 20px;
   left: 20px;
-  flex-direction: column-reverse;
-  align-items: flex-start;
 }
 .tf-bottom-center {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  flex-direction: column-reverse;
-  align-items: center;
 }
 .tf-bottom-right {
   bottom: 20px;
   right: 20px;
-  flex-direction: column-reverse;
+}
+
+.tf-stack-collapsed {
+  position: relative;
+  display: block;
+  width: 320px;
+  min-height: 46px;
+}
+
+.tf-stack-expanded {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 320px;
+}
+
+.tf-top-left .tf-stack-collapsed,
+.tf-bottom-left .tf-stack-collapsed,
+.tf-top-left .tf-stack-expanded,
+.tf-bottom-left .tf-stack-expanded {
+  align-items: flex-start;
+}
+
+.tf-top-center .tf-stack-collapsed,
+.tf-bottom-center .tf-stack-collapsed,
+.tf-top-center .tf-stack-expanded,
+.tf-bottom-center .tf-stack-expanded {
+  align-items: center;
+}
+
+.tf-top-right .tf-stack-collapsed,
+.tf-bottom-right .tf-stack-collapsed,
+.tf-top-right .tf-stack-expanded,
+.tf-bottom-right .tf-stack-expanded {
   align-items: flex-end;
 }
 
+/* ---- Toast base ---- */
 .tf-toast {
   display: flex;
   align-items: center;
@@ -70,8 +91,15 @@
   );
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  animation: tf-fadeIn 0.2s ease-out;
   min-width: 320px;
+  width: 320px;
+  box-sizing: border-box;
+}
+
+/* New toast entry animation */
+.tf-stack-collapsed > .tf-toast:first-child,
+.tf-stack-expanded > .tf-toast {
+  animation: tf-fadeIn 0.22s ease-out;
 }
 
 .tf-icon {
@@ -161,14 +189,14 @@
   color: rgba(23, 23, 23, 0.7);
 }
 
+/* ---- Animations ---- */
 @keyframes tf-fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-8px) scale(0.96);
   }
-
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }

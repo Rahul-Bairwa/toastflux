@@ -42,33 +42,48 @@ const icons = {
   default: null,
 };
 
-export function ToastItem({ toast }: { toast: Toast }) {
+interface ToastItemProps {
+  toast: Toast;
+  index: number;
+  total: number;
+  isExpanded: boolean;
+  isBottom: boolean;
+}
+
+const MAX_STACK_VISIBLE = 3;
+const PEEK_OFFSET = 10;
+const SCALE_STEP = 0.05;
+const OPACITY_STEP = 0.15;
+
+export function ToastItem({ toast, index, total, isExpanded, isBottom }: ToastItemProps) {
   const duration = toast.duration ?? 3000;
   const [offset, setOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isItemHovered, setIsItemHovered] = useState(false);
   const dragStartX = useRef<number | null>(null);
 
   const remainingTime = useRef(duration);
   const startTime = useRef(Date.now());
 
+  const isPaused = isExpanded || isItemHovered || isDragging;
+
   useEffect(() => {
     if (duration === Infinity || duration <= 0) return;
+    if (isPaused) return;
 
-    if (!isHovered && !isDragging) {
-      startTime.current = Date.now();
-      const timer = setTimeout(() => {
-        toastLib.dismiss(toast.id);
-      }, remainingTime.current);
+    startTime.current = Date.now();
+    const timer = setTimeout(() => {
+      toastLib.dismiss(toast.id);
+    }, remainingTime.current);
 
-      return () => {
-        clearTimeout(timer);
-        remainingTime.current -= Date.now() - startTime.current;
-      };
-    }
-  }, [isHovered, isDragging, duration, toast.id]);
+    return () => {
+      clearTimeout(timer);
+      remainingTime.current -= Date.now() - startTime.current;
+    };
+  }, [isPaused, duration, toast.id]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isExpanded && index !== 0) return;
     if ((e.target as HTMLElement).closest('button')) return;
     dragStartX.current = e.clientX;
     setIsDragging(true);
@@ -78,7 +93,7 @@ export function ToastItem({ toast }: { toast: Toast }) {
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging || dragStartX.current === null) return;
     const deltaX = e.clientX - dragStartX.current;
-    
+
     const pos = toast.position || "top-right";
     if (pos.includes("right") && deltaX < 0) return;
     if (pos.includes("left") && deltaX > 0) return;
@@ -90,8 +105,7 @@ export function ToastItem({ toast }: { toast: Toast }) {
     if (!isDragging) return;
     setIsDragging(false);
     dragStartX.current = null;
-    
-    // Dismiss if swiped more than 50px
+
     if (Math.abs(offset) > 50) {
       toastLib.dismiss(toast.id);
     } else {
@@ -99,23 +113,57 @@ export function ToastItem({ toast }: { toast: Toast }) {
     }
   };
 
-  const dynamicStyle = {
+  const stackDepth = index;
+  const isHidden = stackDepth >= MAX_STACK_VISIBLE;
+  const scale = 1 - stackDepth * SCALE_STEP;
+  const peekY = stackDepth * PEEK_OFFSET * (isBottom ? -1 : 1);
+  const opacity = isHidden ? 0 : 1 - stackDepth * OPACITY_STEP;
+
+  let containerStyle: React.CSSProperties;
+
+  if (!isExpanded) {
+    containerStyle = {
+      position: "absolute",
+      top: isBottom ? undefined : 0,
+      bottom: isBottom ? 0 : undefined,
+      left: 0,
+      right: 0,
+      transform: `translateY(${peekY}px) scale(${scale})${offset ? ` translateX(${offset}px)` : ""}`,
+      opacity,
+      zIndex: total - stackDepth,
+      visibility: isHidden ? "hidden" : "visible",
+      pointerEvents: index === 0 ? "auto" : "none",
+      transformOrigin: isBottom ? "bottom center" : "top center",
+    };
+  } else {
+    containerStyle = {
+      position: "relative",
+      transform: offset ? `translateX(${offset}px)` : undefined,
+      opacity: 1,
+      zIndex: total - stackDepth,
+      pointerEvents: "auto",
+    };
+  }
+
+  const dynamicStyle: React.CSSProperties = {
     ...toast.style,
-    transform: offset ? `translateX(${offset}px)` : undefined,
-    transition: isDragging ? "none" : "transform 0.2s ease",
-    touchAction: 'none' as const
+    ...containerStyle,
+    transition: isDragging
+      ? "opacity 0.3s ease, visibility 0.3s ease"
+      : "transform 0.35s cubic-bezier(0.34, 1.15, 0.64, 1), opacity 0.3s ease, visibility 0.3s ease",
+    touchAction: "none",
   };
 
   if (toast.render) {
     return (
-      <div 
-        style={{ transform: dynamicStyle.transform, transition: dynamicStyle.transition, touchAction: 'none' }}
+      <div
+        style={dynamicStyle}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() => setIsItemHovered(true)}
+        onMouseLeave={() => setIsItemHovered(false)}
       >
         {toast.render()}
       </div>
@@ -126,20 +174,29 @@ export function ToastItem({ toast }: { toast: Toast }) {
   const Icon = toast.icon !== undefined ? toast.icon : defaultIcon;
 
   return (
-    <div 
+    <div
       className={`tf-toast tf-toast-${toast.type} ${toast.className || ""}`}
       style={dynamicStyle}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setIsItemHovered(true)}
+      onMouseLeave={() => setIsItemHovered(false)}
     >
-      {Icon && <span className="tf-icon" style={{ alignSelf: 'flex-start', marginTop: '2px', color: toast.iconColor }}>{Icon}</span>}
-      <div className="tf-message" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      {Icon && (
+        <span
+          className="tf-icon"
+          style={{ alignSelf: "flex-start", marginTop: "2px", color: toast.iconColor }}
+        >
+          {Icon}
+        </span>
+      )}
+      <div className="tf-message" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <span>{toast.message}</span>
-        {toast.description && <span className="tf-description">{toast.description}</span>}
+        {toast.description && (
+          <span className="tf-description">{toast.description}</span>
+        )}
         {toast.progress !== undefined && (
           <div className="tf-progress-bg">
             <div className="tf-progress-fill" style={{ width: `${toast.progress}%` }} />
@@ -148,22 +205,19 @@ export function ToastItem({ toast }: { toast: Toast }) {
       </div>
 
       {toast.action && (
-        <button 
-          onClick={toast.action.onClick}
-          className="tf-action-btn"
-        >
+        <button onClick={toast.action.onClick} className="tf-action-btn">
           {toast.action.label}
         </button>
       )}
 
       {toast.dismissible && (
-         <button 
-           title="Dismiss"
-           onClick={() => toastLib.dismiss(toast.id)}
-           className="tf-close-btn"
-         >
-           ✖
-         </button>
+        <button
+          title="Dismiss"
+          onClick={() => toastLib.dismiss(toast.id)}
+          className="tf-close-btn"
+        >
+          ✖
+        </button>
       )}
     </div>
   );
