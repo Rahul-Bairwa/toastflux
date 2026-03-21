@@ -1,7 +1,6 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig([
-  // 🔥 CORE BUILD
   {
     entry: ["packages/core/src/index.ts"],
     format: ["esm", "cjs"],
@@ -12,7 +11,6 @@ export default defineConfig([
     splitting: false,
   },
 
-  // ⚛️ REACT BUILD
   {
     entry: ["packages/react/src/index.ts"],
     format: ["esm", "cjs"],
@@ -21,6 +19,9 @@ export default defineConfig([
     sourcemap: true,
     clean: true,
     splitting: false,
-    external: ["react", "react-dom"], // 🔥 IMPORTANT
+    external: ["react", "react-dom"],
+    banner: {
+      js: '"use client";',
+    },
   },
 ]);
