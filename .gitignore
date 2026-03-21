@@ -1,7 +1,7 @@
 /node_modules
 /apps/next-app
 /apps/react-app
-/apps/toastflux-web
+# /apps/toastflux-web
 /packages/core/dist
 /packages/react/dist
 /packages/styles/dist
