@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "jsx": "react-jsx",
+        "lib": [
+            "DOM",
+            "ESNext"
+        ],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "strict": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "declarationMap": true,
+        "baseUrl": ".",
+        "paths": {
+            "@toastflux/core": [
+                "packages/core/src"
+            ],
+            "@toastflux/react": [
+                "packages/react/src"
+            ]
+        }
+    }
+}

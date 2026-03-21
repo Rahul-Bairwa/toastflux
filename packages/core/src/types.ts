@@ -1,0 +1,39 @@
+import { ReactNode, CSSProperties } from "react";
+
+export type ToastType =
+  | "success"
+  | "error"
+  | "info"
+  | "warning"
+  | "loading"
+  | "default";
+
+export type ToastPosition =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right";
+
+export interface Toast {
+  id: string;
+  message?: string;
+  description?: ReactNode;
+  type?: ToastType;
+  createdAt: number;
+  style?: CSSProperties;
+  className?: string;
+  duration?: number;
+  dismissible?: boolean;
+  position?: ToastPosition;
+  icon?: ReactNode;
+  iconColor?: string;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+  render?: () => ReactNode;
+  progress?: number;
+  groupId?: string;
+}
