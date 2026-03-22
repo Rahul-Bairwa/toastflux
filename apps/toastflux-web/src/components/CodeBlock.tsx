@@ -25,13 +25,20 @@ export function CodeBlock({ code, language = "bash" }: CodeBlockProps) {
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20 border border-amber-500/30" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20 border border-emerald-500/30" />
         </div>
-        <button
-          onClick={copyToClipboard}
-          className="text-zinc-500 hover:text-white transition-colors cursor-pointer"
-          title="Copy to clipboard"
-        >
-          {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-        </button>
+        <div className="flex items-center gap-2">
+          {copied && (
+            <span className="text-[10px] font-semibold text-emerald-500">
+              Copied!
+            </span>
+          )}
+          <button
+            onClick={copyToClipboard}
+            className="text-zinc-500 hover:text-white transition-colors cursor-pointer"
+            title="Copy to clipboard"
+          >
+            {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+          </button>
+        </div>
       </div>
       <div className="p-4 overflow-x-auto">
         <pre className="text-sm font-mono text-zinc-300">

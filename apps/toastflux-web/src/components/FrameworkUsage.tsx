@@ -53,14 +53,14 @@ export function FrameworkUsage() {
   };
 
   return (
-    <div className="w-full rounded-2xl border border-[#222] bg-[#050505] overflow-hidden">
+    <div className="w-full rounded-xl sm:rounded-2xl border border-[#222] bg-[#050505] overflow-hidden">
       {/* Main Framework Tabs */}
-      <div className="flex bg-[#0a0a0a] border-b border-[#222]">
+      <div className="flex bg-[#0a0a0a] border-b border-[#222] overflow-x-auto no-scrollbar">
         {frameworks.map((f) => (
           <button
             key={f.id}
             onClick={() => handleFrameworkChange(f.id)}
-            className={`px-8 py-4 text-sm font-semibold transition-all border-b-2 cursor-pointer ${
+            className={`px-5 sm:px-8 py-3 sm:py-4 text-sm font-semibold transition-all border-b-2 cursor-pointer whitespace-nowrap ${
               activeTab === f.id
                 ? "border-purple-500 text-white bg-white/[0.02]"
                 : "border-transparent text-zinc-500 hover:text-white"
@@ -71,18 +71,18 @@ export function FrameworkUsage() {
         ))}
       </div>
       
-      <div className="p-8 space-y-6">
-        <h4 className="text-lg font-bold text-white">
+      <div className="p-4 sm:p-8 space-y-4 sm:space-y-6">
+        <h4 className="text-base sm:text-lg font-bold text-white">
           {activeFramework.title}
         </h4>
 
         {/* Sub-tabs for Files */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar">
            {activeFramework.files.map((file, i) => (
               <button
                  key={file.name}
                  onClick={() => setActiveFileIndex(i)}
-                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer ${
+                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
                     activeFileIndex === i
                        ? "bg-[#111] text-purple-400 border border-purple-500/30"
                        : "text-zinc-500 hover:bg-[#111] hover:text-zinc-300 border border-transparent"

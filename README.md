@@ -1,7 +1,13 @@
 # 🚀 ToastFlux
 
+[![npm version](https://img.shields.io/npm/v/toastflux.svg?style=flat-square)](https://www.npmjs.com/package/toastflux)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/toastflux?style=flat-square&label=size)](https://bundlephobia.com/package/toastflux)
+[![license](https://img.shields.io/npm/l/toastflux.svg?style=flat-square)](https://github.com/Rahul-Bairwa/toastflux/blob/main/LICENSE)
+
 > ⚡ Lightweight • 🎨 Beautiful • 🧠 Fully Customizable
 > A modern toast notification library for React & Next.js
+
+🔗 **[Documentation & Live Demo →](https://toastflux.versintal.in)**
 
 ---
 
@@ -9,16 +15,17 @@
 
 ToastFlux is built for developers who want **speed, flexibility, and clean UI** without complexity.
 
-- ⚡ Blazing fast & lightweight
+- ⚡ Ultra lightweight — 3kb gzipped
 - 🎨 Beautiful default UI (no extra styling needed)
 - 🧩 Fully customizable (style, icon, font, layout)
-- 📍 Flexible positioning system
+- 📍 Flexible positioning system (6 positions)
 - 🎯 Action buttons (Undo, Retry, etc.)
 - ⏱ Smart duration & dismiss control
 - 📊 Progress bar support
 - 📝 Description text support
 - 🌗 Built-in dark & light themes
-- ⚛️ Works with React & Next.js App Router
+- ⚛️ Works with **React & Next.js App Router**
+- 🔷 **TypeScript-first** with full type safety
 - 👆 Swipe to dismiss (touch & pointer support)
 
 ---
@@ -26,12 +33,22 @@ ToastFlux is built for developers who want **speed, flexibility, and clean UI** 
 ## 📦 Installation
 
 ```bash
+# npm
 npm install toastflux
+
+# yarn
+yarn add toastflux
+
+# pnpm
+pnpm add toastflux
+
+# bun
+bun add toastflux
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start (React)
 
 ```jsx
 import { Toaster, toast } from "toastflux";
@@ -54,159 +71,9 @@ export default App;
 
 ---
 
-## 🎯 Toast Types
-
-```jsx
-toast.success("Saved successfully!");
-toast.info("Meeting starts soon.");
-toast.warning("Storage almost full.");
-toast.error("Upload failed.");
-toast.default("Just a message.");
-```
-
----
-
-## 🎨 Customization
-
-### 📝 Description
-
-Add a subtitle/description below the main message:
-
-```jsx
-toast.success("Event has been created", {
-  description: "Monday, January 3rd at 6:00pm",
-});
-```
-
----
-
-### ⏱ Duration & Dismiss
-
-```jsx
-toast.success("I stay longer!", {
-  duration: 6000,
-  dismissible: true,
-});
-```
-
----
-
-### 🎯 Action Buttons
-
-```jsx
-toast.info("Item deleted", {
-  action: {
-    label: "Undo",
-    onClick: () => console.log("Undo clicked"),
-  },
-});
-```
-
----
-
-### 📍 Positioning
-
-```jsx
-toast.success("Bottom right toast!", {
-  position: "bottom-right",
-});
-```
-
-Or globally via `<Toaster />`:
-
-```jsx
-<Toaster position="top-right" />
-```
-
----
-
-### 📊 Progress Bar
-
-```jsx
-toast.info("Uploading file...", {
-  progress: 45,
-});
-```
-
----
-
-### 🎨 Custom Style & Icon
-
-```jsx
-toast.default("Custom styled toast", {
-  style: {
-    border: "1px solid #ec4899",
-    background: "#fdf2f8",
-    color: "#000",
-  },
-  icon: <span>🌟</span>,
-  iconColor: "#10b981",
-});
-```
-
----
-
-## 🎭 Themes
-
-ToastFlux supports built-in dark and light themes:
-
-```jsx
-<Toaster theme="light" />
-<Toaster theme="dark" />
-```
-
----
-
-## 🧠 API Overview
-
-### `toast(message, options?)`
-
-| Option        | Type               | Description                   |
-| ------------- | ------------------ | ----------------------------- |
-| `description` | ReactNode          | Subtitle below main message   |
-| `duration`    | number             | Auto dismiss time in ms       |
-| `dismissible` | boolean            | Enable manual ✖ close button  |
-| `position`    | ToastPosition      | Where toast appears on screen |
-| `style`       | CSSProperties      | Inline styles override        |
-| `className`   | string             | Custom CSS class              |
-| `icon`        | ReactNode          | Custom icon element           |
-| `iconColor`   | string             | Color for default icons       |
-| `action`      | { label, onClick } | Action button config          |
-| `progress`    | number             | Progress bar value (0–100)    |
-
----
-
-## 📍 Supported Positions
-
-| Position        | Description                |
-| --------------- | -------------------------- |
-| `top-left`      | Top left corner            |
-| `top-center`    | Top center                 |
-| `top-right`     | Top right corner (default) |
-| `bottom-left`   | Bottom left corner         |
-| `bottom-center` | Bottom center              |
-| `bottom-right`  | Bottom right corner        |
-
----
-
-## 🔤 Custom Font (CSS Variable)
-
-ToastFlux uses a clean system font by default. To match your app's custom font, set the `--tf-font-family` CSS variable:
-
-```css
-/* In your global CSS (e.g. index.css or globals.css) */
-:root {
-  --tf-font-family: "Inter", sans-serif;
-}
-```
-
-👉 Falls back to `system-ui, sans-serif` by default — no ugly serif fonts!
-
----
-
 ## ⚙️ Next.js (App Router) Usage
 
-ToastFlux works seamlessly with Next.js App Router. Since it uses client-side state, add `"use client"` where needed.
+ToastFlux works seamlessly with Next.js App Router. The library includes the `"use client"` directive automatically.
 
 ### 1. Add `<Toaster />` to Root Layout
 
@@ -248,6 +115,153 @@ export default function HomePage() {
 }
 ```
 
+---
+
+## 🎯 Toast Types
+
+```jsx
+toast.success("Saved successfully!");
+toast.info("Meeting starts soon.");
+toast.warning("Storage almost full.");
+toast.error("Upload failed.");
+toast.default("Just a message.");
+```
+
+---
+
+## 🎨 Customization
+
+### 📝 Description
+
+Add a subtitle/description below the main message:
+
+```jsx
+toast.success("Event has been created", {
+  description: "Monday, January 3rd at 6:00pm",
+});
+```
+
+### ⏱ Duration & Dismiss
+
+```jsx
+toast.success("I stay longer!", {
+  duration: 6000,
+  dismissible: true,
+});
+```
+
+### 🎯 Action Buttons
+
+```jsx
+toast.info("Item deleted", {
+  action: {
+    label: "Undo",
+    onClick: () => console.log("Undo clicked"),
+  },
+});
+```
+
+### 📍 Positioning
+
+```jsx
+// Per-toast positioning
+toast.success("Bottom right toast!", {
+  position: "bottom-right",
+});
+
+// Or globally via <Toaster />
+<Toaster position="top-right" />;
+```
+
+### 📊 Progress Bar
+
+```jsx
+toast.info("Uploading file...", {
+  progress: 45,
+});
+```
+
+### 🎨 Custom Style & Icon
+
+```jsx
+toast.default("Custom styled toast", {
+  style: {
+    border: "1px solid #ec4899",
+    background: "#fdf2f8",
+    color: "#000",
+  },
+  icon: <span>🌟</span>,
+  iconColor: "#10b981",
+});
+```
+
+---
+
+## 🎭 Themes
+
+ToastFlux supports built-in dark and light themes:
+
+```jsx
+<Toaster theme="light" />
+<Toaster theme="dark" />
+```
+
+---
+
+## 🧠 API Reference
+
+### `toast(message, options?)`
+
+| Option        | Type               | Default       | Description                   |
+| ------------- | ------------------ | ------------- | ----------------------------- |
+| `description` | ReactNode          | `undefined`   | Subtitle below main message   |
+| `duration`    | number             | `4000`        | Auto dismiss time in ms       |
+| `dismissible` | boolean            | `false`       | Enable manual ✖ close button  |
+| `position`    | ToastPosition      | `'top-right'` | Where toast appears on screen |
+| `style`       | CSSProperties      | `undefined`   | Inline styles override        |
+| `className`   | string             | `undefined`   | Custom CSS class              |
+| `icon`        | ReactNode          | `undefined`   | Custom icon element           |
+| `iconColor`   | string             | `undefined`   | Color for default icons       |
+| `action`      | { label, onClick } | `undefined`   | Action button config          |
+| `progress`    | number             | `undefined`   | Progress bar value (0–100)    |
+
+### `<Toaster />` Props
+
+| Prop       | Type                | Default       | Description                     |
+| ---------- | ------------------- | ------------- | ------------------------------- |
+| `theme`    | `'dark' \| 'light'` | `'dark'`      | Visual theme of toasts          |
+| `position` | ToastPosition       | `'top-right'` | Default position for all toasts |
+
+---
+
+## 📍 Supported Positions
+
+| Position        | Description                |
+| --------------- | -------------------------- |
+| `top-left`      | Top left corner            |
+| `top-center`    | Top center                 |
+| `top-right`     | Top right corner (default) |
+| `bottom-left`   | Bottom left corner         |
+| `bottom-center` | Bottom center              |
+| `bottom-right`  | Bottom right corner        |
+
+---
+
+## 🔤 Custom Font (CSS Variable)
+
+ToastFlux uses a clean system font by default. To match your app's custom font, set the `--tf-font-family` CSS variable:
+
+```css
+/* In your global CSS (e.g. index.css or globals.css) */
+:root {
+  --tf-font-family: "Inter", sans-serif;
+}
+```
+
+👉 Falls back to `system-ui, sans-serif` by default — no ugly serif fonts!
+
+---
+
 ## 🚀 Roadmap
 
 - [x] Toast types (success, error, info, warning, default)
@@ -258,6 +272,7 @@ export default function HomePage() {
 - [x] Progress bar
 - [x] Swipe to dismiss
 - [x] Next.js App Router support
+- [x] TypeScript support
 - [ ] Promise-based toasts (`toast.promise`)
 - [ ] Smart toast grouping
 - [ ] Advanced animations
@@ -268,16 +283,14 @@ export default function HomePage() {
 ## 🤝 Contributing
 
 PRs and ideas are welcome!
-Feel free to open issues or suggest improvements.
+Feel free to [open issues](https://github.com/Rahul-Bairwa/toastflux/issues) or suggest improvements.
 
 ---
 
 ## 📄 License
 
-MIT
-
----
+## [MIT](https://github.com/Rahul-Bairwa/toastflux/blob/main/LICENSE)
 
 ## ❤️ Author
 
-Built with passion by **Rahul Bairwa**
+Built with passion by [**Rahul Bairwa**](https://github.com/Rahul-Bairwa)

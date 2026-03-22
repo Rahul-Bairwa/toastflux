@@ -56,12 +56,12 @@ const toastTypes = [
 
 export function InteractivePlayground() {
   return (
-    <div className="relative rounded-2xl border border-[#222] bg-[#050505] overflow-hidden p-10 md:p-16 transition-all hover:border-zinc-700/30 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]">
+    <div className="relative rounded-xl sm:rounded-2xl border border-[#222] bg-[#050505] overflow-hidden p-5 sm:p-10 md:p-16 transition-all hover:border-zinc-700/30 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]">
       <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 via-transparent to-white/5 opacity-40 pointer-events-none" />
       
       <div className="relative z-10 flex flex-col items-center gap-12">
         <div className="text-center space-y-3">
-          <h3 className="text-2xl font-bold text-white tracking-tight">Interactive Playground</h3>
+          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Interactive Playground</h3>
           <p className="text-zinc-500 text-sm max-w-sm">
             Click any button below to see the different toast types in action.
           </p>
