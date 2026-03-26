@@ -1,16 +1,17 @@
 import { toastStore } from "./store";
-import { Toast, ToastType } from "./types";
-
-export type ToastOptions = Partial<Omit<Toast, "id" | "type" | "createdAt">>;
+import { Toast, ToastType, ToastOptions } from "./types";
 
 function createToast(message: string | undefined, type: ToastType, options?: ToastOptions) {
   const id = crypto.randomUUID();
+
+  const defaultOptions = toastStore.getConfig();
 
   toastStore.add({
     id,
     message,
     type,
     createdAt: Date.now(),
+    ...defaultOptions,
     ...options,
   });
 

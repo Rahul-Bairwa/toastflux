@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { Toast, toast as toastLib } from "@toastflux/core";
+import { Toast, toast as toastLib, MAX_STACK_VISIBLE, PEEK_OFFSET, SCALE_STEP, OPACITY_STEP } from "@toastflux/core";
 
 const icons = {  success: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><rect width="48" height="48" fill="none"/><g fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="4"><path d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"/><path strokeLinecap="round" d="m16 24l6 6l12-12"/></g></svg>,
   info: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><path fill="currentColor" d="M12.002 1.999c5.523 0 10.001 4.478 10.001 10.002c0 5.523-4.478 10.001-10.001 10.001C6.478 22.002 2 17.524 2 12.001C2 6.477 6.478 1.999 12.002 1.999m0 1.5a8.502 8.502 0 1 0 0 17.003a8.502 8.502 0 0 0 0-17.003M12 10.5a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75M12 9a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></svg>,
@@ -18,11 +18,6 @@ interface ToastItemProps {
   isExpanded: boolean;
   isBottom: boolean;
 }
-
-const MAX_STACK_VISIBLE = 3;
-const PEEK_OFFSET = 10;
-const SCALE_STEP = 0.05;
-const OPACITY_STEP = 0.15;
 
 export function ToastItem({ toast, index, total, isExpanded, isBottom }: ToastItemProps) {
   const duration = toast.duration ?? 3000;

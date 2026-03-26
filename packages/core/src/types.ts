@@ -35,5 +35,11 @@ export interface Toast {
   };
   render?: () => ReactNode;
   progress?: number;
-  groupId?: string;
 }
+
+export type ToastOptions = Partial<Omit<Toast, "id" | "type" | "createdAt">>;
+
+export const PEEK_OFFSET = 10;
+export const MAX_STACK_VISIBLE = 3;
+export const SCALE_STEP = 0.05;
+export const OPACITY_STEP = 0.15;

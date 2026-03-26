@@ -1,10 +1,19 @@
-import { Toast } from "./types";
+import { Toast, ToastOptions } from "./types";
 
 type Listener = () => void;
 
 class ToastStore {
   private toasts: Toast[] = [];
   private listeners: Listener[] = [];
+  private config: ToastOptions = {};
+
+  updateConfig(newConfig: ToastOptions) {
+    this.config = { ...this.config, ...newConfig };
+  }
+
+  getConfig() {
+    return this.config;
+  }
 
   subscribe(listener: Listener) {
     this.listeners.push(listener);

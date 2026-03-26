@@ -1,6 +1,6 @@
 {
   "name": "toastflux",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lightweight, beautiful, and fully customizable toast notification library for React & Next.js with modern UI, themes, actions, and progress support.",
   "author": "Rahul",
   "license": "MIT",
@@ -27,16 +27,16 @@
   ],
   "exports": {
     ".": {
+      "types": "./packages/react/dist/index.d.ts",
       "import": "./packages/react/dist/index.mjs",
-      "require": "./packages/react/dist/index.js",
-      "types": "./packages/react/dist/index.d.ts"
+      "require": "./packages/react/dist/index.js"
     },
     "./styles/toast.css": "./packages/styles/toast.css"
   },
   "sideEffects": [
     "*.css"
   ],
-  "homepage": "https://github.com/Rahul-Bairwa/toastflux",
+  "homepage": "https://toastflux.versintal.in",
   "repository": {
     "type": "git",
     "url": "https://github.com/Rahul-Bairwa/toastflux.git"

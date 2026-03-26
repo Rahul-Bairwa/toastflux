@@ -124,6 +124,7 @@ toast.success("Saved successfully!");
 toast.info("Meeting starts soon.");
 toast.warning("Storage almost full.");
 toast.error("Upload failed.");
+toast.loading("Fetching data...");
 toast.default("Just a message.");
 ```
 
@@ -169,8 +170,8 @@ toast.success("Bottom right toast!", {
   position: "bottom-right",
 });
 
-// Or globally via <Toaster />
-<Toaster position="top-right" />;
+// Globally via <Toaster />
+<Toaster position="top-right" duration={5000} />;
 ```
 
 ### 📊 Progress Bar
@@ -204,6 +205,21 @@ ToastFlux supports built-in dark and light themes:
 ```jsx
 <Toaster theme="light" />
 <Toaster theme="dark" />
+
+### ⚙️ Global Configuration
+
+You can define global defaults directly in the `<Toaster />` component. This helps keep your code DRY (Don't Repeat Yourself).
+
+```jsx
+<Toaster 
+  position="bottom-right" 
+  duration={5000} 
+  toastOptions={{
+    style: { border: '1px solid #444' },
+    className: 'my-global-toast-class'
+  }} 
+/>
+```
 ```
 
 ---
@@ -227,10 +243,12 @@ ToastFlux supports built-in dark and light themes:
 
 ### `<Toaster />` Props
 
-| Prop       | Type                | Default       | Description                     |
-| ---------- | ------------------- | ------------- | ------------------------------- |
-| `theme`    | `'dark' \| 'light'` | `'dark'`      | Visual theme of toasts          |
-| `position` | ToastPosition       | `'top-right'` | Default position for all toasts |
+| Prop           | Type                | Default       | Description                     |
+| -------------- | ------------------- | ------------- | ------------------------------- |
+| `theme`        | `'dark' \| 'light'` | `'dark'`      | Visual theme of toasts          |
+| `position`     | ToastPosition       | `'top-right'` | Default position for all toasts |
+| `duration`     | number              | `4000`        | Default duration for all toasts |
+| `toastOptions` | ToastOptions        | `undefined`   | Global default options          |
 
 ---
 
@@ -275,8 +293,6 @@ ToastFlux uses a clean system font by default. To match your app's custom font, 
 - [x] TypeScript support
 - [ ] Promise-based toasts (`toast.promise`)
 - [ ] Smart toast grouping
-- [ ] Advanced animations
-- [ ] DevTools panel
 
 ---
 

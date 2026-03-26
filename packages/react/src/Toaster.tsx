@@ -1,12 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useToastStore } from "./useToast";
 import { ToastItem } from "./ToastItem";
+import { PEEK_OFFSET, MAX_STACK_VISIBLE, toastStore, ToastOptions } from "@toastflux/core";
 
-export function Toaster({ theme = "dark" }: { theme?: "light" | "dark" } = {}) {
+export interface ToasterProps extends ToastOptions {
+  theme?: "light" | "dark";
+  toastOptions?: ToastOptions;
+}
+
+export function Toaster({ theme = "dark", toastOptions, position, ...restOptions }: ToasterProps = {}) {
   const toasts = useToastStore();
   const [hoveredPos, setHoveredPos] = useState<string | null>(null);
+
+  useEffect(() => {
+    toastStore.updateConfig({ position, ...restOptions, ...toastOptions });
+  }, [position, JSON.stringify(restOptions), JSON.stringify(toastOptions)]);
 
   if (typeof window === "undefined") return null;
 
@@ -19,8 +29,10 @@ export function Toaster({ theme = "dark" }: { theme?: "light" | "dark" } = {}) {
     "bottom-right",
   ];
 
+  const globalPos = position || toastOptions?.position || "top-right";
+
   const groupedToasts = positions.reduce((acc, pos) => {
-    acc[pos] = toasts.filter((t: any) => (t.position || "top-right") === pos);
+    acc[pos] = toasts.filter((t: any) => (t.position || globalPos) === pos);
     return acc;
   }, {} as Record<string, typeof toasts>);
 
@@ -34,13 +46,8 @@ export function Toaster({ theme = "dark" }: { theme?: "light" | "dark" } = {}) {
         const isExpanded = hoveredPos === pos;
         const count = posToasts.length;
 
-        // How much extra space to show "peeking" toasts behind
-        // Each subsequent toast peeks 10px further away
-        const PEEK_OFFSET = 10;
-        const MAX_VISIBLE_STACK = 3;
-        const visibleStack = Math.min(count - 1, MAX_VISIBLE_STACK - 1);
+        const visibleStack = Math.min(count - 1, MAX_STACK_VISIBLE - 1);
 
-        // collapsed container height accounts for peeking
         const collapsedExtraHeight = isExpanded ? 0 : visibleStack * PEEK_OFFSET;
 
         return (
@@ -51,14 +58,12 @@ export function Toaster({ theme = "dark" }: { theme?: "light" | "dark" } = {}) {
             onMouseEnter={() => setHoveredPos(pos)}
             onMouseLeave={() => setHoveredPos(null)}
           >
-            {/* Stack wrapper: relative container so absolute toasts position correctly */}
             <div
               className={`tf-stack-wrapper ${isExpanded ? "tf-stack-expanded" : "tf-stack-collapsed"}`}
               style={
                 !isExpanded
                   ? {
                       position: "relative",
-                      // Extra padding at bottom (top positions) or top (bottom positions) for peeking
                       paddingBottom: !isBottom ? collapsedExtraHeight : 0,
                       paddingTop: isBottom ? collapsedExtraHeight : 0,
                     }
