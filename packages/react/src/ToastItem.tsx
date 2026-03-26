@@ -28,8 +28,25 @@ export function ToastItem({ toast, index, total, isExpanded, isBottom }: ToastIt
 
   const remainingTime = useRef(duration);
   const startTime = useRef(Date.now());
+  const prevType = useRef(toast.type);
+
+  if (prevType.current !== toast.type) {
+    prevType.current = toast.type;
+    remainingTime.current = duration;
+    startTime.current = Date.now();
+  }
 
   const isPaused = isExpanded || isItemHovered || isDragging;
+
+  const toastRef = useRef(toast);
+  toastRef.current = toast;
+
+  useEffect(() => {
+    toastRef.current.onShow?.(toastRef.current);
+    return () => {
+      toastRef.current.onClose?.(toastRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (duration === Infinity || duration <= 0) return;
@@ -128,6 +145,11 @@ export function ToastItem({ toast, index, total, isExpanded, isBottom }: ToastIt
         onPointerCancel={handlePointerUp}
         onMouseEnter={() => setIsItemHovered(true)}
         onMouseLeave={() => setIsItemHovered(false)}
+        onClick={() => {
+          if (Math.abs(offset) < 5) {
+            toast.onClick?.(toast);
+          }
+        }}
       >
         {toast.render()}
       </div>
@@ -147,6 +169,11 @@ export function ToastItem({ toast, index, total, isExpanded, isBottom }: ToastIt
       onPointerCancel={handlePointerUp}
       onMouseEnter={() => setIsItemHovered(true)}
       onMouseLeave={() => setIsItemHovered(false)}
+      onClick={(e) => {
+        if (Math.abs(offset) < 5) {
+          toast.onClick?.(toast);
+        }
+      }}
     >
       {Icon && (
         <span

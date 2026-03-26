@@ -36,6 +36,12 @@ class ToastStore {
     this.emit();
   }
 
+  update(id: string, newToastInfo: Partial<Toast>) {
+    this.toasts = this.toasts.map((t) => (t.id === id ? { ...t, ...newToastInfo } : t));
+    this.emit();
+  }
+
+
   private emit() {
     this.listeners.forEach((l) => l());
   }

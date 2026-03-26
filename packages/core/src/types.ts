@@ -35,6 +35,9 @@ export interface Toast {
   };
   render?: () => ReactNode;
   progress?: number;
+  onShow?: (toast: Toast) => void;
+  onClose?: (toast: Toast) => void;
+  onClick?: (toast: Toast) => void;
 }
 
 export type ToastOptions = Partial<Omit<Toast, "id" | "type" | "createdAt">>;
