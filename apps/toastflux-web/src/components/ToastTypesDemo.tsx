@@ -39,9 +39,12 @@ const toastTypes = [
   { 
     name: "Promise", 
     action: () => {
-      // simulate a promise
-      toast.info("Updating data...", { duration: 2000 });
-      setTimeout(() => toast.success("Data updated!"), 2000);
+      const promise = new Promise((resolve) => setTimeout(() => resolve({ name: "Profile" }), 1500));
+      toast.promise(promise, {
+        loading: 'Syncing...',
+        success: (data: any) => `${data.name} synced!`,
+        error: 'Sync failed!',
+      });
     },
     icon: <Loader2 className="w-5 h-5 animate-spin" />,
     color: "purple"

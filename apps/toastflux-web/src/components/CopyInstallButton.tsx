@@ -13,24 +13,31 @@ export function CopyInstallButton() {
   };
 
   return (
-    <div className="flex h-10 sm:h-12 items-center gap-3 rounded-full border border-zinc-800 bg-[#0a0a0a] px-4 sm:px-5 text-xs sm:text-sm font-mono text-zinc-300">
-      <span className="text-zinc-500">npm install toastflux</span>
-      <button
-        onClick={handleCopy}
-        className="ml-1 text-zinc-600 hover:text-white transition-colors cursor-pointer"
-        title="Copy to clipboard"
-      >
-        {copied ? (
-          <Check size={14} className="text-emerald-500" />
-        ) : (
-          <Copy size={14} />
+    <div 
+      onClick={handleCopy}
+      className="flex h-[42px] sm:h-12 items-center justify-between gap-3 rounded-full border border-zinc-800 bg-[#0a0a0a] px-5 sm:px-6 cursor-pointer hover:border-zinc-700 transition-all active:scale-[0.98] w-full sm:w-auto min-w-[220px]"
+    >
+      <div className="flex items-center gap-2 overflow-hidden">
+        <span className="text-zinc-600 text-[10px] sm:text-xs font-mono select-none">$</span>
+        <span className="text-zinc-300 text-xs sm:text-sm font-mono truncate">npm install toastflux</span>
+      </div>
+      <div className="flex items-center gap-2 shrink-0">
+        {copied && (
+          <span className="text-[10px] font-bold text-emerald-500 animate-in slide-in-from-right-1 fade-in">
+            Copied!
+          </span>
         )}
-      </button>
-      {copied && (
-        <span className="text-[10px] font-semibold text-emerald-500 animate-in fade-in">
-          Copied!
-        </span>
-      )}
+        <div 
+          className="p-1.5 rounded-lg bg-zinc-900/50 text-zinc-500 group-hover:text-white transition-colors"
+          title="Copy to clipboard"
+        >
+          {copied ? (
+            <Check size={14} className="text-emerald-500" />
+          ) : (
+            <Copy size={14} />
+          )}
+        </div>
+      </div>
     </div>
   );
 }

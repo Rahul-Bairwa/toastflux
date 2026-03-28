@@ -41,6 +41,10 @@
     "type": "git",
     "url": "https://github.com/Rahul-Bairwa/toastflux.git"
   },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/Rahul-Bairwa"
+  },
   "bugs": {
     "url": "https://github.com/Rahul-Bairwa/toastflux/issues"
   },

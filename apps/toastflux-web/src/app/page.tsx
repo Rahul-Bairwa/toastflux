@@ -7,7 +7,7 @@ import { PositioningDemo } from "@/components/PositioningDemo";
 import { CodeBlock } from "@/components/CodeBlock";
 import { FrameworkUsage } from "@/components/FrameworkUsage";
 import { CopyInstallButton } from "@/components/CopyInstallButton";
-import { Check } from "lucide-react";
+import { Check, Heart, ArrowRight } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -37,11 +37,21 @@ export default function HomePage() {
                     configuration required. The modern alternative to Sonner
                     and React-Toastify.
                   </p>
-                  <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4 mt-6 sm:mt-8">
-                    <a href="#installation" className="rounded-full bg-purple-600 px-6 sm:px-8 py-3 sm:py-3.5 text-white font-semibold transition-all hover:bg-purple-700 hover:scale-105 active:scale-95 shadow-[0_0_30px_-5px_rgba(168,85,247,0.4)] cursor-pointer text-sm sm:text-base">
+                  <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 mt-8 sm:mt-10 w-full sm:w-auto">
+                    <a href="#installation" className="rounded-full bg-purple-600 px-8 py-3.5 text-white font-bold transition-all hover:bg-purple-700 hover:scale-[1.02] active:scale-95 shadow-[0_0_30px_-5px_rgba(168,85,247,0.4)] cursor-pointer text-center text-sm sm:text-base">
                       Get Started
                     </a>
-                    <CopyInstallButton />
+                    <a 
+                      href="https://github.com/sponsors/Rahul-Bairwa" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-zinc-800 bg-white/5 px-8 py-3.5 text-zinc-300 font-bold transition-all hover:bg-white/10 hover:border-zinc-700 active:scale-95 text-sm sm:text-base flex items-center justify-center gap-2 group"
+                    >
+                      <Heart size={16} className="text-pink-500 fill-current group-hover:scale-110 transition-transform" /> Support
+                    </a>
+                    <div className="sm:inline-block">
+                      <CopyInstallButton />
+                    </div>
                   </div>
                 </div>
 
@@ -53,6 +63,22 @@ export default function HomePage() {
                       <h3 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-zinc-300">Try It Live – Interactive Playground</h3>
                    </div>
                    <InteractivePlayground />
+                   
+                   {/* POST-PLAYGROUND SUPPORT CTA */}
+                   <div className="mt-10 py-6 border-y border-white/[0.03] bg-gradient-to-r from-transparent via-white/[0.02] to-transparent flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
+                      <div className="flex items-center gap-2 text-sm text-zinc-500 font-medium font-sans">
+                         <Heart size={14} className="text-pink-500 fill-current" />
+                         Enjoying ToastFlux? Support development
+                      </div>
+                      <a 
+                        href="https://github.com/sponsors/Rahul-Bairwa" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-pink-500/10 text-pink-500 border border-pink-500/20 hover:bg-pink-500/20 transition-all active:scale-95 flex items-center gap-2"
+                      >
+                        Sponsor <ArrowRight size={10} />
+                      </a>
+                   </div>
                 </div>
               </section>
 
@@ -178,6 +204,13 @@ export default function HomePage() {
                    </tbody>
                 </table>
                 </div>
+                
+                {/* SUBTLE API MICRO CTA */}
+                <div className="mt-8 flex justify-center">
+                   <p className="text-[13px] text-zinc-500 flex items-center gap-2 font-sans italic border-zinc-500">
+                      If this library helped you, consider <Heart size={12} className="text-pink-500 fill-current inline" /> <a href="https://github.com/sponsors/Rahul-Bairwa" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:underline">supporting</a>
+                   </p>
+                </div>
               </section>
 
               {/* GLOBAL CONFIG + NEW FEATURES */}
@@ -194,9 +227,13 @@ export default function HomePage() {
 
               {/* FOOTER - MINI */}
               <footer className="mt-16 sm:mt-32 pt-6 sm:pt-8 border-t border-[#222] flex flex-col items-center gap-4 sm:gap-6 pb-8 sm:pb-12">
-                 <div className="flex gap-6 sm:gap-8">
+                 <div className="flex items-center gap-6 sm:gap-8">
                     <a href="https://github.com/Rahul-Bairwa/toastflux" target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-zinc-600 hover:text-white transition-colors cursor-pointer">GitHub</a>
                     <a href="https://www.npmjs.com/package/toastflux" target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-zinc-600 hover:text-white transition-colors cursor-pointer">NPM</a>
+                    <div className="w-px h-3 bg-zinc-800" />
+                    <a href="https://github.com/sponsors/Rahul-Bairwa" target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold uppercase tracking-wider text-pink-500/80 hover:text-pink-500 transition-colors flex items-center gap-1.5">
+                       Support this project <span className="text-[14px]">→</span> <span className="underline underline-offset-4 decoration-pink-500/30">Sponsor</span>
+                    </a>
                  </div>
                  <p className="text-[10px] sm:text-[11px] uppercase font-bold tracking-[0.15em] sm:tracking-[0.2em] text-zinc-800 text-center px-4">
                     © 2026 ToastFlux. Built by Rahul. All rights reserved.
