@@ -47,10 +47,29 @@ const toastTypes = [
   { 
     name: "Promise", 
     action: () => {
-      toast.info("Updating workspace...", { duration: 2000 });
-      setTimeout(() => toast.success("Workspace updated!"), 2000);
+      const p = new Promise<string>((resolve) =>
+        setTimeout(() => resolve("toastflux"), 2000)
+      );
+      toast.promise(p, {
+        loading: "Fetching latest version...",
+        success: (pkg) => `✅ ${pkg} is up to date!`,
+        error: "Failed to fetch",
+      });
     },
     icon: <Loader2 size={18} className="animate-spin" />,
+  },
+  { 
+    name: "Lifecycle", 
+    action: () => {
+      toast.info("Track my lifecycle!", {
+        duration: 5000,
+        dismissible: true,
+        onShow: (t) => console.log(`[onShow] ${t.id}`),
+        onClick: (t) => console.log(`[onClick] ${t.id}`),
+        onClose: (t) => console.log(`[onClose] ${t.id}`),
+      });
+    },
+    icon: <Info size={18} />,
   },
 ];
 

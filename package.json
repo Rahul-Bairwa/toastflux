@@ -1,6 +1,6 @@
 {
   "name": "toastflux",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A lightweight, beautiful, and fully customizable toast notification library for React & Next.js with modern UI, themes, actions, and progress support.",
   "author": "Rahul",
   "license": "MIT",
@@ -50,13 +50,14 @@
   },
   "workspaces": [
     "packages/*",
-    "apps/*"
+    "apps/react-app"
   ],
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup"
   },
   "devDependencies": {
-    "tsup": "^8.5.1"
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
   }
 }

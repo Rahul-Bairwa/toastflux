@@ -180,6 +180,18 @@ export default function HomePage() {
                 </div>
               </section>
 
+              {/* GLOBAL CONFIG + NEW FEATURES */}
+              <section id="global-config" className="mb-12 sm:mb-24">
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Global Configuration</h2>
+                <p className="text-sm sm:text-base text-zinc-500 mb-6 sm:mb-8 max-w-xl">
+                  Set default toast options globally via the <code className="text-purple-400 bg-[#111] px-1.5 py-0.5 rounded text-sm">&lt;Toaster /&gt;</code> component — so every toast inherits your defaults automatically.
+                </p>
+                <CodeBlock
+                  language="tsx"
+                  code={`<Toaster\n  theme="light"\n  position="bottom-right"\n  duration={5000}\n  toastOptions={{ style: { borderRadius: '12px' } }}\n/>\n\n// Promise Toast\ntoast.promise(fetchUser(), {\n  loading: 'Loading...',\n  success: (u) => \`Welcome, \${u.name}!\`,\n  error: 'Failed to load',\n});\n\n// Lifecycle Hooks\ntoast.success('Saved!', {\n  onShow: (t) => analytics.track('toast_shown', { id: t.id }),\n  onClick: (t) => router.push('/dashboard'),\n  onClose: (t) => console.log('closed', t.id),\n});`}
+                />
+              </section>
+
               {/* FOOTER - MINI */}
               <footer className="mt-16 sm:mt-32 pt-6 sm:pt-8 border-t border-[#222] flex flex-col items-center gap-4 sm:gap-6 pb-8 sm:pb-12">
                  <div className="flex gap-6 sm:gap-8">

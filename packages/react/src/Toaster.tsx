@@ -13,12 +13,24 @@ export interface ToasterProps extends ToastOptions {
 export function Toaster({ theme = "dark", toastOptions, position, ...restOptions }: ToasterProps = {}) {
   const toasts = useToastStore();
   const [hoveredPos, setHoveredPos] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     toastStore.updateConfig({ position, ...restOptions, ...toastOptions });
   }, [position, JSON.stringify(restOptions), JSON.stringify(toastOptions)]);
 
-  if (typeof window === "undefined") return null;
+  const globalPos = position || toastOptions?.position || "top-right";
+
+  // Reset hoveredPos if the current hovered position no longer has any toasts
+  // This prevents the "stuck expanded" state after dismissing the last toast
+  useEffect(() => {
+    if (hoveredPos && toasts.filter((t: any) => (t.position || globalPos) === hoveredPos).length === 0) {
+      setHoveredPos(null);
+    }
+  }, [toasts.length, hoveredPos, globalPos]);
+
+  if (!isMounted) return null;
 
   const positions = [
     "top-left",
@@ -28,10 +40,7 @@ export function Toaster({ theme = "dark", toastOptions, position, ...restOptions
     "bottom-center",
     "bottom-right",
   ];
-
-  const globalPos = position || toastOptions?.position || "top-right";
-
-  const groupedToasts = positions.reduce((acc, pos) => {
+  const groupedToasts = positions.reduce((acc: any, pos) => {
     acc[pos] = toasts.filter((t: any) => (t.position || globalPos) === pos);
     return acc;
   }, {} as Record<string, typeof toasts>);

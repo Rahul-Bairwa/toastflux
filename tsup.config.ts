@@ -10,7 +10,6 @@ export default defineConfig([
     clean: true,
     splitting: false,
     minify: true,
-    treeshake: true,
   },
 
   {
@@ -22,7 +21,6 @@ export default defineConfig([
     clean: true,
     splitting: false,
     minify: true,
-    treeshake: true,
     external: ["react", "react-dom"],
     banner: {
       js: '"use client";',
