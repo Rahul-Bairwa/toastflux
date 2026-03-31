@@ -117,7 +117,8 @@
 .tf-description {
   font-size: 13px;
   color: rgba(241, 241, 241, 0.7);
-  margin-top: -5px;
+  margin-top: 0px;
+  line-height: 1.2;
 }
 
 /* Progress Bar */
@@ -156,8 +157,16 @@
   cursor: pointer;
   padding: 4px 4px 4px 8px;
   font-size: 14px;
-  align-self: flex-start;
+  align-self: center;
 }
+
+.tf-close-btn:focus,
+.tf-close-btn:focus-visible,
+.tf-close-btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
 .tf-close-btn:hover {
   color: #ffffff;
 }

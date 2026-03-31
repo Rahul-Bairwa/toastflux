@@ -178,12 +178,16 @@ export function ToastItem({ toast, index, total, isExpanded, isBottom }: ToastIt
       {Icon && (
         <span
           className="tf-icon"
-          style={{ alignSelf: "flex-start", marginTop: "2px", color: toast.iconColor }}
+          style={{ 
+            alignSelf: toast.description ? "flex-start" : "center",
+            marginTop: toast.description ? "2px" : "0",
+            color: toast.iconColor 
+          }}
         >
           {Icon}
         </span>
       )}
-      <div className="tf-message" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+      <div className="tf-message" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <span>{toast.message}</span>
         {toast.description && (
           <span className="tf-description">{toast.description}</span>
